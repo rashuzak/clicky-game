@@ -1,82 +1,104 @@
-import React, { Component } from 'react';
+/*import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import PictureCard from "./components/PictureCard";
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
+
+export default App;*/
+import React, { Component } from "react";
+import FriendCard from "./components/FriendCard";
 import Wrapper from "./components/Wrapper";
-import cards from "./cards.json";
+import friends from "./friends.json";
+import NavBar from "./components/NavBar/NavBar";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
+import "./App.css";
 
 class App extends Component {
-  // Setting this.state.cards to the cards json array
+
   state = {
-    cards,
-    clickedArray: [],
-    topScore: 0,
+    friends,
     score: 0,
-    message: "",
-    shakeit: "false"
+    topScore: 0,
+    clicked: [],
+    topMessage: "Click an image to begin"
   };
-  clickPicture = id => {
-    // Arrange the pictures in a random manner
-    const shuffledArray = this.shuffleArray(cards);
-    this.setState({cards: shuffledArray});
-    // if clicked an image already clicked set this.state.score = 0; empty clickeadArray, end of if block
-    if (this.state.clickedArray.includes(id)) {
-      this.setState({ score: 0, clickedArray: [], message: "Incorrect!! Game Over ☹️ Click an image to start again!", shakeit: "true"});
+
+  removeFriend = id => {
+    const friends = this.state.friends.filter(friend => friend.id !== id);
+    this.setState({ friends });
+  };
+
+  clickedImage = props => {
+    if (this.state.clicked.includes(props.id) === false) {
+      this.state.clicked.push(props.id);
+      this.setState({
+        score: this.state.score + 1,
+      });
+      if (this.state.score >= this.state.topScore) {
+        this.setState((prevState) => ({ 
+          topScore: prevState.score,
+          topMessage:"You guessed correctly!"
+         }))
+      };
     }
     else {
       this.setState({
-        clickedArray: this.state.clickedArray.concat([id]),
-        score: this.state.score + 1,
-        message: "Correct!! 🙂",
-        shakeit: "false"
+        score: 0,
+        clicked: [],
+        topMessage: "You guessed incorrectly!"
       });
-    }
-    // set topscore = score if score>topscore.
-    if (this.state.score > this.state.topScore) {
-      this.setState({ topScore: this.state.score });
-    }
-    // shake the wrapper if shakeit is set to true
-  }
-  shuffleArray = (picturesArray) => {
-      for (let i = picturesArray.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [picturesArray[i], picturesArray[j]] = [picturesArray[j], picturesArray[i]];
-      }
-      return picturesArray;
-  }
+      if (this.state.score >= this.state.topScore) {
+        this.setState({ topScore: this.state.score })
+      };
+    };
+  };
+
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React Clicky Game!!</h1>
-        </header>
-        <h3 className="App-intro">
-          <strong>Click on an image to earn points, but don't click on any, more than once!</strong> 
-          <p className = "score"><strong>Score: {this.state.score} | TopScore: {this.state.topScore}</strong></p>
-          <p className="message"><strong>{this.state.message}</strong></p>
-        </h3>
-        <Wrapper
-        shakeWrapper = {this.state.shakeit}
-        pictures=
-          {this.state.cards.map(picture => (
-            <PictureCard
-              clickPicture={this.clickPicture}
-              id={picture.id}
-              key={picture.id} // to get rid of unique key prop warning
-              name={picture.name}
-              image={picture.image}
+      <div>
+        <NavBar
+          scores={this.state}
+        />
+        <Header />
+        <Wrapper>
+          {this.state.friends.map(item => (
+            <FriendCard
+              // removeFriend={this.removeFriend}
+              clickedImage={this.clickedImage}
+              id={item.id}
+              key={item.id}
+              name={item.name}
+              image={item.image}
+              occupation={item.occupation}
+              location={item.location}
             />
           ))}
-        />
-        <footer className="footer">
-      <div className="container">
-        <span className="text-muted">&copy;Shama - Clicky Game - React app.</span>
-      </div>
-    </footer> 
+        </Wrapper>
+        <Footer />
       </div>
     );
-  }
-}
+  };
+};
 
 export default App;

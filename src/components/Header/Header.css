@@ -1,6 +1,7 @@
-.wrapper {
+.header {
+    text-align: center;
     padding-top: 50px;
-    background: #00adb5;
+    background: #eeeeee;
     height: 100%;
     display: flex;
     flex-flow: row wrap;
