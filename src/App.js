@@ -82,7 +82,8 @@ class App extends Component {
         />
         <Header />
         <Wrapper>
-          {this.state.friends.map(item => (
+
+          {this.state.friends.sort(function(a, b){return 0.5 - Math.random()}).map(item => (
             <FriendCard
               // removeFriend={this.removeFriend}
               clickedImage={this.clickedImage}
