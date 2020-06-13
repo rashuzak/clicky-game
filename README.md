@@ -19,10 +19,15 @@ Created a memory game with React.  Application UI are in different components: m
 
 
 Technologies Used:
+
 HTML
+
 CSS
+
 JavaScript
+
 Node.js
+
 React
 
 

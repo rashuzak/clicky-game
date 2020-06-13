@@ -43,16 +43,17 @@ class App extends Component {
     topMessage: "Click an image to begin"
   };
 
-  removeFriend = id => {
+ /* removeFriend = id => {
     const friends = this.state.friends.filter(friend => friend.id !== id);
     this.setState({ friends });
-  };
+  };*/
 
   clickedImage = props => {
     if (this.state.clicked.includes(props.id) === false) {
       this.state.clicked.push(props.id);
       this.setState({
         score: this.state.score + 1,
+        topMessage:"You guessed correctly!",
       });
       if (this.state.score >= this.state.topScore) {
         this.setState((prevState) => ({ 
@@ -70,6 +71,7 @@ class App extends Component {
       if (this.state.score >= this.state.topScore) {
         this.setState({ topScore: this.state.score })
       };
+      
     };
   };
 
