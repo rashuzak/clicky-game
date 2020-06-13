@@ -1,29 +1,4 @@
-/*import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;*/
 import React, { Component } from "react";
 import FriendCard from "./components/FriendCard";
 import Wrapper from "./components/Wrapper";
@@ -43,10 +18,7 @@ class App extends Component {
     topMessage: "Click an image to begin"
   };
 
- /* removeFriend = id => {
-    const friends = this.state.friends.filter(friend => friend.id !== id);
-    this.setState({ friends });
-  };*/
+ 
 
   clickedImage = props => {
     if (this.state.clicked.includes(props.id) === false) {
@@ -91,10 +63,8 @@ class App extends Component {
               clickedImage={this.clickedImage}
               id={item.id}
               key={item.id}
-              name={item.name}
               image={item.image}
-              occupation={item.occupation}
-              location={item.location}
+              
             />
           ))}
         </Wrapper>
